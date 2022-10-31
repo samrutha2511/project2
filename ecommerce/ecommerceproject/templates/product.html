@@ -1,0 +1,45 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+    {{product.description|truncatewords:150}}
+{% endblock %}
+
+{% block title %}
+  {% if category %}
+    {{pd.name}} -  Book Club
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="row my_prod_row_class">
+  <div class="mx_auto">
+    <p><a href="{% url 'ecommerceapp:allProdCat' %}">Home</a> | <a href="{{pd.category.get_url}}">{{pd.category}}</a> | {{pd.name}}</p>
+  </div>
+</div>
+<div class="container">
+<br>
+<div class="row">
+  <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+    <div style="min-width: 18rem">
+      <img src="{{pd.image.url}}" alt="{{pd.name}}" style="width:300px; height:300px">
+    </div>
+  </div>
+  <div class="col-12 col-sm-12 col-md-12 col-lg-6 ">
+    <div>
+    <div class="my_prod_title">
+      <h1><b>{{pd.name}}</b></h1>
+      <p><b>Price: </b>{{pd.price}}</p>
+      <p class="my_title"><b>Product Description:</b> </p>
+      <p class="text-justify my_prod_text">{{pd.description}}</p>
+      {% if pd.stock <= 0 %}
+      <p class="text-justify my_prod_text"><b>Out of stock</b></p>
+      {% else %}
+      <a class="btn btn-secondary" href="{% url 'cart:add_cart' pd.id %}"><b>Add Cart</b></a>
+      {% endif %}
+    </div>
+  </div>
+    </div>
+</div>
+</div>
+{% endblock %}
